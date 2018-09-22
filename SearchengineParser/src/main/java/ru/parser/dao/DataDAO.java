@@ -38,7 +38,6 @@ public class DataDAO {
                 statement.setLong(7, data.getCategoryId());
                 statement.setLong(8, data.getCityId());
 
-                System.out.println(data.toString());
 
                 statement.addBatch();
 

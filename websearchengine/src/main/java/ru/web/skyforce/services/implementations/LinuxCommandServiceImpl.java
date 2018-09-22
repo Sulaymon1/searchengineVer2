@@ -1,5 +1,6 @@
 package ru.web.skyforce.services.implementations;
 
+import org.springframework.stereotype.Service;
 import ru.web.skyforce.services.interfaces.LinuxCommandService;
 
 import java.io.BufferedReader;
@@ -12,6 +13,7 @@ import java.io.InputStreamReader;
  * @author Hursanov Sulaymon
  * @version v1.0
  **/
+@Service
 public class LinuxCommandServiceImpl implements LinuxCommandService {
     @Override
     public boolean isRunningParser() {
@@ -28,7 +30,7 @@ public class LinuxCommandServiceImpl implements LinuxCommandService {
     @Override
     public void startParser() {
         try {
-            Runtime.getRuntime().exec("nohup java -jar /home/dev/projects/parser/parser.jar &");
+            Runtime.getRuntime().exec("nohup java -jar /home/dev/projects/parser/searchengineVer2/SearchengineParser/target/parser.jar &");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.web.skyforce.services.interfaces.LinuxCommandService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
@@ -36,6 +37,8 @@ public class DataParserServiceImpl implements DataParserService {
     @Autowired
     private CategoryStatusRepository categoryStatusRepository;
 
+    @Autowired
+    private LinuxCommandService linuxCommandService;
 
     @Override
     public void addNewDataToParse(String categories) {
@@ -55,6 +58,9 @@ public class DataParserServiceImpl implements DataParserService {
                             .inProcess(false)
                             .ready(false)
                             .build());
+                    if (!linuxCommandService.isRunningParser()){
+                        linuxCommandService.startParser();
+                    }
                 }
             }
     }
