@@ -15,24 +15,45 @@ import java.io.InputStreamReader;
  **/
 @Service
 public class LinuxCommandServiceImpl implements LinuxCommandService {
+
     @Override
     public boolean isRunningParser() {
         try {
-            Process process = Runtime.getRuntime().exec("jps -lV | grep parser.jar");
+            Process process = Runtime.getRuntime().exec(new String[] { "/bin/bash", "-c"," jps -lV | grep parser.jar"});
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            return stdInput.readLine() != null;
+            BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+
+
+            return !(stdInput.readLine() == null);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return false;
     }
 
+
     @Override
     public void startParser() {
         try {
-            Runtime.getRuntime().exec("nohup java -jar /home/dev/projects/parser/searchengineVer2/SearchengineParser/target/parser.jar &");
-        } catch (IOException e) {
-            e.printStackTrace();
+            Process exec = Runtime.getRuntime().exec(new String[] {"/bin/bash","-c"," nohup java -jar /home/dev/projects/parser/searchengineVer2/SearchengineParser/target/parser.jar &"});
+            try {
+                exec.waitFor();
+                BufferedReader stdInput = new BufferedReader(new InputStreamReader(exec.getInputStream()));
+                BufferedReader stdError = new BufferedReader(new InputStreamReader(exec.getErrorStream()));
+                String s;
+                while ((s=stdInput.readLine())!=null){
+                    System.out.println(s);
+                }
+                System.out.println("error");
+                while ((s=stdError.readLine())!=null){
+                    System.out.println(s);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+    } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
-    }
 }

@@ -7,10 +7,7 @@
     <groupId>ru.websearchengine</groupId>
     <artifactId>websearchengine</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>..</module>
-    </modules>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
