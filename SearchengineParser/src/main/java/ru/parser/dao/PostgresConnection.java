@@ -37,7 +37,7 @@ public class PostgresConnection {
 
     private static void loadProperties(){
         properties = new Properties();
-        InputStream in = PostgresConnection.class.getResourceAsStream("/app.properties");
+        InputStream in = PostgresConnection.class.getClassLoader().getResourceAsStream("app.properties");
         try {
             properties.load(in);
             in.close();

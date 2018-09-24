@@ -27,7 +27,9 @@ public class Launcher {
         Category category = null;
         List<City> cities = cityDAO.findAll();
         while ((category=categoryDAO.next())!=null){
+            System.out.println(category.getName());
             for (City city: cities){
+                System.out.println(city.getName());
                 parseService.parseByCategoryAndCity(city,category);
             }
             categoryDAO.update(category);
