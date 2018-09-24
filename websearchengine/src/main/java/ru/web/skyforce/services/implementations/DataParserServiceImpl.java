@@ -10,6 +10,7 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.web.skyforce.services.interfaces.LinuxCommandService;
+import ru.web.skyforce.util.CopyDBToFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
@@ -39,6 +40,9 @@ public class DataParserServiceImpl implements DataParserService {
 
     @Autowired
     private LinuxCommandService linuxCommandService;
+
+    @Autowired
+    private CopyDBToFile copyDBToFile;
 
     @Override
     public void addNewDataToParse(String categories) {
@@ -75,7 +79,7 @@ public class DataParserServiceImpl implements DataParserService {
     @Override
     public void downloadData(String keyword, HttpServletResponse response) throws SQLException {
         keyword = keyword.replace("'","").toLowerCase();
-        String path = "";//copyDBToFile.copy(keyword);
+        String path = copyDBToFile.copy(keyword);
 
         try {
             InputStream inputStream = new FileInputStream(path+"/"+keyword+".txt");
