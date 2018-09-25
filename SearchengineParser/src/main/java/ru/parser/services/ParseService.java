@@ -67,7 +67,7 @@ public class ParseService {
                 dataDAO.save(productList);
             productParsingService.getProductList().clear();
 
-        } catch (Exception e) {
+        } catch (Throwable e) {
            e.printStackTrace();
         }
     }

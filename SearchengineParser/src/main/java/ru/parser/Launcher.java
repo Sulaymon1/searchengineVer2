@@ -30,7 +30,11 @@ public class Launcher {
             System.out.println(category.getName());
             for (City city: cities){
                 System.out.println(city.getName());
-                parseService.parseByCategoryAndCity(city,category);
+                try {
+                    parseService.parseByCategoryAndCity(city,category);
+                }catch (Throwable e){
+                    e.printStackTrace();
+                }
             }
             categoryDAO.update(category);
         }
