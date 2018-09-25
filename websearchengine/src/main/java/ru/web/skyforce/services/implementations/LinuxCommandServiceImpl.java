@@ -35,7 +35,7 @@ public class LinuxCommandServiceImpl implements LinuxCommandService {
     @Override
     public void startParser() {
         try {
-            Process exec = Runtime.getRuntime().exec(new String[] {"/bin/bash","-c"," nohup java -jar /home/dev/projects/parser/searchengineVer2/SearchengineParser/target/parser.jar > /home/dev/projects/parser/parser.out"});
+            Process exec = Runtime.getRuntime().exec(new String[] {"/bin/bash","-c"," nohup java -jar /home/dev/projects/parser/searchengineVer2/SearchengineParser/target/parser.jar > /home/dev/projects/parser/parser.out &"});
             try {
                 exec.waitFor();
                 BufferedReader stdInput = new BufferedReader(new InputStreamReader(exec.getInputStream()));
