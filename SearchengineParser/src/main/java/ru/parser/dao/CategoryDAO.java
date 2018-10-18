@@ -54,4 +54,18 @@ public class CategoryDAO {
             e.printStackTrace();
         }
     }
+
+    public void update(int index, Category category) {
+        String SQL="UPDATE categorystatus SET progress=? WHERE id=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(SQL);
+            int CITYCOUNT = 2588;
+            index =(index/CITYCOUNT)*100;
+            statement.setLong(1,index);
+            statement.setLong(2,category.getId());
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
