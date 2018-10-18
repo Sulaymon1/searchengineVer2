@@ -14,7 +14,7 @@ import java.net.URL;
 public class HttpRequestService {
 
     public void sendMailByHttp(String topic,String message){
-        String url = "http://localhost:8095/sendMail?topic="+topic+"&message="+message;
+        String url = "http://localhost:8093/sendMail?topic="+topic.replace(" ", "_")+"&message="+message.replace(" ", "_").replace("/", "_");
 
         try {
             URL obj = new URL(url);
