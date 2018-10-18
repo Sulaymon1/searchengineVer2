@@ -46,7 +46,7 @@
         <#if categoryStatus.ready>
             <td>Done</td>
         <#elseif categoryStatus.progress?? >
-            <td  id="${categoryStatus.category.title?replace(" ","")}">${categoryStatus.progress}%</td>
+            <td  id="${categoryStatus.category.title?replace(" ","")}">${categoryStatus.progress/2588*100}%</td>
         <#else >
             <td  id="${categoryStatus.category.title?replace(" ","")}">Waiting</td>
         </#if>
