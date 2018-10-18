@@ -20,18 +20,27 @@ public class CategoryDAO {
         this.connection = connection;
     }
 
-    public Category next(){
+    public Category next(Boolean isFirstTime){
         Statement statement = null;
         Category category = null;
+        String SQL ;
+        if (isFirstTime){
+            SQL = "SELECT * FROM category WHERE id = " +
+                    "(SELECT id FROM categorystatus WHERE in_process=TRUE LIMIT 1)";
+        }else {
+            SQL = "SELECT * FROM category WHERE id = " +
+                    "(SELECT id FROM categorystatus WHERE in_process is NOT TRUE AND ready is NOT TRUE LIMIT 1)";
+        }
         try {
             statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM category WHERE id = " +
-                    "(SELECT id FROM categorystatus WHERE in_process is NOT TRUE AND ready is NOT TRUE LIMIT 1)");
+            ResultSet resultSet = statement.executeQuery(SQL);
             while (resultSet.next()){
                 long id = resultSet.getLong("id");
                 String categoryNameToLower = resultSet.getString("category_name_to_lower");
+                Long progress = resultSet.getLong("progress");
                 category = new Category();
                 category.setId(id);
+                category.setProgress(progress);
                 category.setName(categoryNameToLower);
                 PreparedStatement preparedStatement = connection.prepareStatement("UPDATE categorystatus SET in_process=TRUE WHERE id=?");
                 preparedStatement.setLong(1,id);
@@ -59,8 +68,6 @@ public class CategoryDAO {
         String SQL="UPDATE categorystatus SET progress=? WHERE id=?";
         try {
             PreparedStatement statement = connection.prepareStatement(SQL);
-            int CITYCOUNT = 2588;
-            index =(index/CITYCOUNT)*100;
             statement.setLong(1,index);
             statement.setLong(2,category.getId());
             statement.execute();

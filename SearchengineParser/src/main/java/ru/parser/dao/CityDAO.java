@@ -40,4 +40,29 @@ public class CityDAO {
 
         return cities;
     }
+
+    public List<City> findAllAfterIndex(Long index){
+        List<City> cities = new ArrayList<>();
+        try {
+            String SQL = "SELECT * FROM city WHERE id > ?";
+            PreparedStatement statement = connection.prepareStatement(SQL);
+            statement.setLong(1, index);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                long id = resultSet.getLong("id");
+                String name = resultSet.getString("name");
+                City city = new City();
+                city.setId(id);
+                city.setName(name);
+                cities.add(city);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cities;
+    }
+
+
 }

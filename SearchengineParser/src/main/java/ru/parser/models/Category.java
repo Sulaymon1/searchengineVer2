@@ -9,6 +9,15 @@ package ru.parser.models;
 public class Category {
     private Long id;
     private String name;
+    private Long progress;
+
+    public Long getProgress() {
+        return progress;
+    }
+
+    public void setProgress(Long progress) {
+        this.progress = progress;
+    }
 
     public Category() {
 
