@@ -29,6 +29,7 @@ public class CategoryStatus {
     private Category category;
 
 
+    private Long progress;
     private Boolean inProcess;
     private Boolean ready;
 }
