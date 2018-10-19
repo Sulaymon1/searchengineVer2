@@ -25,11 +25,11 @@ public class CategoryDAO {
         Category category = null;
         String SQL ;
         if (isFirstTime){
-            SQL = "SELECT * FROM category WHERE id = " +
-                    "(SELECT id FROM categorystatus WHERE in_process=TRUE LIMIT 1)";
+            SQL = "SELECT category.*, progress FROM category, (SELECT id, progress FROM categorystatus WHERE in_process=TRUE LIMIT 1) e " +
+                    "WHERE category.id = e.id";
         }else {
-            SQL = "SELECT * FROM category WHERE id = " +
-                    "(SELECT id FROM categorystatus WHERE in_process is NOT TRUE AND ready is NOT TRUE LIMIT 1)";
+            SQL = "SELECT category.*, progress FROM category, (SELECT id, progress FROM categorystatus WHERE in_process is NOT TRUE AND ready is NOT TRUE LIMIT 1) e " +
+                    "WHERE category.id = e.id";
         }
         try {
             statement = connection.createStatement();
